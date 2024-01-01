@@ -15,7 +15,7 @@ function NotFound({ handleTheme, theme }) {
           className="lg:order-1 lg:w-1/2"
           src={theme === "dark" ? illustration404Dark : illustration404Light}
         />
-        <div class="flex flex-col gap-8 items-center lg:items-start lg:w-1/2">
+        <div className="flex flex-col gap-8 items-center lg:items-start lg:w-1/2">
           <img
             className="md:w-5/6 w-36"
             src={theme === "dark" ? dark404 : light404}

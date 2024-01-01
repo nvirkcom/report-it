@@ -1,6 +1,7 @@
 import "./App.scss";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Login from "./pages/Login/Login";
 import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
