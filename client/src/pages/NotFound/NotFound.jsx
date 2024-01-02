@@ -1,7 +1,6 @@
 import "./NotFound.scss";
 import { Link } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useEffect, useState } from "react";
 import dark404 from "../../assets/images/dark-404.png";
 import illustration404Dark from "../../assets/images/illustration-404-dark.png";
 import illustration404Light from "../../assets/images/illustration-404-light.png";
@@ -9,7 +8,7 @@ import light404 from "../../assets/images/light-404.png";
 
 function NotFound({ handleTheme, theme }) {
   return (
-    <section className="bg-white dark:bg-gray-900 dark:text-gray-400 flex h-screen items-center justify-center px-12 relative text-gray-700">
+    <section className="bg-white dark:bg-gray-900 dark:text-gray-400 flex items-center justify-center min-h-screen px-12 relative text-gray-700">
       <div className="flex flex-col gap-8 items-center lg:flex-row lg:gap-20 lg:justify-between lg:max-w-5xl max-w-sm">
         <img
           className="lg:order-1 lg:w-1/2"

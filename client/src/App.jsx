@@ -34,7 +34,10 @@ function App() {
       <main>
         <Routes>
           <Route element={<Navigate to="/login" />} path="/" />
-          <Route element={<div>Login</div>} path="/login" />
+          <Route
+            element={<Login handleTheme={handleTheme} theme={theme} />}
+            path="/login"
+          />
           <Route
             element={<NotFound handleTheme={handleTheme} theme={theme} />}
             path="/404"
