@@ -1,16 +1,15 @@
-import "./Login.scss";
-import { FaKey, FaUser } from "react-icons/fa6";
+import "./Register.scss";
 import { GiNotebook } from "react-icons/gi";
 import { Link } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useEffect } from "react";
 
-function Login({ handleTheme, theme }) {
+function Register({ handleTheme, theme }) {
   useEffect(() => {
-    document.title = "Login - Report It";
+    document.title = "Register - Report It";
   }, []);
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
 
     const { username, password } = e.target;
@@ -70,13 +69,13 @@ function Login({ handleTheme, theme }) {
         <GiNotebook className="text-6xl text-blue-600" />
         <div className="flex flex-col items-center gap-1">
           <h1 className="text-2xl font-bold text-gray-700 dark:text-gray-300">
-            Login
+            Register
           </h1>
-          <p className="dark:text-gray-400">Get access to your account</p>
+          <p className="dark:text-gray-400">Create your account today</p>
         </div>
         <form
           className="mt-6 flex w-full flex-col gap-5"
-          onSubmit={handleLogin}
+          onSubmit={handleRegister}
         >
           <div className="relative flex flex-col gap-1">
             <label
@@ -85,10 +84,9 @@ function Login({ handleTheme, theme }) {
             >
               Username
             </label>
-            <FaUser className="absolute left-4 top-[31px] text-sm text-gray-700 dark:text-gray-400" />
             <input
               autoComplete="off"
-              className="rounded border border-gray-400 pb-3 pl-9 pt-2 text-xs outline-none focus:border-blue-600 focus:ring focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-950"
+              className="rounded border border-gray-400 pb-3 pl-4 pt-2 text-xs outline-none focus:border-blue-600 focus:ring focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-950"
               id="username"
               placeholder="example@email.com"
               type="text"
@@ -101,9 +99,8 @@ function Login({ handleTheme, theme }) {
             >
               Password
             </label>
-            <FaKey className="absolute left-4 top-[32px] text-sm text-gray-700 dark:text-gray-400" />
             <input
-              className="rounded border border-gray-400 pb-3 pl-9 pt-2 text-xs outline-none focus:border-blue-600 focus:ring focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-950"
+              className="rounded border border-gray-400 pb-3 pl-4 pt-2 text-xs outline-none focus:border-blue-600 focus:ring focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-950"
               id="password"
               placeholder="Password"
               type="password"
@@ -113,13 +110,13 @@ function Login({ handleTheme, theme }) {
             <input
               className="w-full cursor-pointer rounded bg-blue-600 p-2 text-sm font-bold text-white hover:bg-blue-700 active:bg-blue-800"
               type="submit"
-              value="Login"
+              value="Register"
             />
             <Link
               className="p-1 text-sm font-bold text-blue-500 hover:text-blue-600 active:text-blue-700"
-              to="/register"
+              to="/login"
             >
-              Register
+              Login to an existing account
             </Link>
           </div>
         </form>
@@ -135,4 +132,4 @@ function Login({ handleTheme, theme }) {
   );
 }
 
-export default Login;
+export default Register;
