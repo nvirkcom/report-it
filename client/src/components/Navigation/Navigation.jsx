@@ -21,14 +21,14 @@ function Navigation({ handleTheme, theme }) {
         <div className="flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-5">
             <button
-              className="text-2xl text-gray-500 lg:hidden dark:text-gray-400"
+              className="text-2xl text-gray-500 md:hidden dark:text-gray-400"
               onClick={() => setDisplayMenu(!displayMenu)}
             >
               <IoMdMenu />
             </button>
             <GiNotebook className="text-4xl text-blue-600 dark:text-blue-400" />
           </div>
-          <ul className="hidden gap-12 text-sm text-gray-600 lg:flex dark:text-gray-400">
+          <ul className="hidden gap-12 text-sm text-gray-600 md:flex dark:text-gray-400">
             <li className="flex items-center gap-2">
               <IoIosCreate />
               <Link to="/dashboard/reports/create">Create Report</Link>
