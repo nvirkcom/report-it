@@ -16,7 +16,7 @@ function Navigation({ handleTheme, theme }) {
   const [displayUserActions, setDisplayUserActions] = useState(false);
 
   return (
-    <header className="border-b border-gray-300 dark:border-gray-700 dark:bg-gray-800">
+    <header className="sticky top-0 z-50 border-b border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800">
       <nav className="mx-auto max-w-6xl">
         <div className="flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-5">

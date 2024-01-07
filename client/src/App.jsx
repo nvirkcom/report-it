@@ -3,8 +3,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
+import Navigation from "./components/Navigation/Navigation";
 import NotFound from "./pages/NotFound/NotFound";
 import Register from "./pages/Register/Register";
+import Reports from "./pages/Reports/Reports";
 
 function App() {
   const [theme, setTheme] = useState("light");
@@ -45,8 +47,26 @@ function App() {
             path="/register"
           />
           <Route
-            element={<Dashboard handleTheme={handleTheme} theme={theme} />}
-            path="/dashboard"
+            element={
+              <>
+                <div className="flex min-h-screen flex-col text-gray-800 dark:text-gray-300">
+                  <Navigation handleTheme={handleTheme} theme={theme} />
+                  <div className="grow bg-gray-100 pb-16 dark:bg-gray-900">
+                    <div className="mx-auto max-w-6xl px-6">
+                      <Routes>
+                        <Route element={<Dashboard theme={theme} />} path="/" />
+                        <Route
+                          element={<Reports theme={theme} />}
+                          path="/reports"
+                        />
+                        <Route element={<Navigate to="/404" />} path="*" />
+                      </Routes>
+                    </div>
+                  </div>
+                </div>
+              </>
+            }
+            path="/dashboard/*"
           />
           <Route
             element={<NotFound handleTheme={handleTheme} theme={theme} />}
