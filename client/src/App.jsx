@@ -1,6 +1,7 @@
 import "./App.scss";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Create from "./pages/Create/Create";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 import Navigation from "./components/Navigation/Navigation";
@@ -55,10 +56,8 @@ function App() {
                     <div className="mx-auto max-w-6xl px-6">
                       <Routes>
                         <Route element={<Dashboard theme={theme} />} path="/" />
-                        <Route
-                          element={<Reports theme={theme} />}
-                          path="/reports"
-                        />
+                        <Route element={<Reports />} path="/reports" />
+                        <Route element={<Create />} path="/reports/create" />
                         <Route element={<Navigate to="/404" />} path="*" />
                       </Routes>
                     </div>

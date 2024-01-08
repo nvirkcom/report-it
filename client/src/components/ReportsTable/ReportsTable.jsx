@@ -77,7 +77,7 @@ function TableRow({ report }) {
               : report.type === "Plain Text"
                 ? "bg-yellow-600"
                 : "bg-red-500"
-          } px-2 py-1 text-xs uppercase text-gray-100`}
+          } min-w-24 px-2 py-1 text-center text-xs uppercase text-gray-100`}
         >
           {report.type}
         </span>
