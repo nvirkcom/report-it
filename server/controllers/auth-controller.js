@@ -2,6 +2,10 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const knex = require("knex")(require("../knexfile"));
 
+const authenticate = async (_req, res) => {
+  res.status(200).json({ message: "Authenticated" });
+};
+
 const login = async (req, res) => {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({
@@ -26,6 +30,7 @@ const login = async (req, res) => {
       req.body.password,
       userData.password
     );
+
     if (!passwordMatch) {
       return res.status(401).json({
         message: "Invalid Password",
@@ -79,7 +84,7 @@ const register = async (req, res) => {
     res.status(201).json({
       token: jwt.sign(
         {
-          id: createdUser.id,
+          id: createdUser[0].id,
         },
         process.env.SECRET_KEY
       ),
@@ -92,6 +97,7 @@ const register = async (req, res) => {
 };
 
 module.exports = {
+  authenticate,
   login,
   register,
 };

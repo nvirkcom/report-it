@@ -1,5 +1,6 @@
 require("dotenv").config();
 const authRoutes = require("./routes/auth-routes");
+const cors = require("cors");
 const express = require("express");
 const reportRoutes = require("./routes/report-routes");
 const app = express();
@@ -8,6 +9,7 @@ app.listen(process.env.PORT || 8080, () =>
   console.log("Report It Server Running")
 );
 
+app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRoutes);

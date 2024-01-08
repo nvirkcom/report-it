@@ -32,7 +32,7 @@ const add = async (req, res) => {
     const newReportId = result[0];
     const createdReport = await knex("report").where({ id: newReportId });
 
-    res.status(201).json(createdReport);
+    res.status(201).json(createdReport[0]);
   } catch (error) {
     res.status(500).json({
       message: "Error! Try Again ",

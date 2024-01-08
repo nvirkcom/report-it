@@ -5,7 +5,7 @@ const reportController = require("./../controllers/report-controllers");
 router.use((req, res, next) => {
   const { authorization } = req.headers;
 
-  const token = authorization?.slice("Bearer ".length);
+  const token = authorization.slice("Bearer ".length);
 
   if (!token)
     return res.status(401).json({
@@ -15,6 +15,7 @@ router.use((req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.SECRET_KEY);
     req.user_id = payload.id;
+    console.log(payload);
     next();
   } catch (error) {
     res.status(401).json({
