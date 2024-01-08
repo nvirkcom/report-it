@@ -11,10 +11,10 @@ exports.up = function (knex) {
     })
     .createTable("report", (table) => {
       table.increments("id").primary();
+      table.string("timestamp").notNullable();
       table.string("title").notNullable();
       table.string("type").notNullable();
       table.text("content").notNullable();
-      table.timestamp("datetime").notNullable();
       table
         .integer("user_id")
         .unsigned()
