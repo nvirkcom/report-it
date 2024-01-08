@@ -3,6 +3,7 @@ import "easymde/dist/easymde.min.css";
 import "react-quill/dist/quill.snow.css";
 import { FaCaretDown } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
+import { MdDateRange } from "react-icons/md";
 import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import SimpleMDE from "react-simplemde-editor";
@@ -57,7 +58,7 @@ function Create() {
             type="text"
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="relative flex flex-col gap-2">
           <label
             className="font-medium uppercase text-gray-500"
             htmlFor="datetime"
@@ -65,10 +66,11 @@ function Create() {
             Date & Time
           </label>
           <input
-            className="appearance-none rounded border border-gray-300 bg-white px-4 py-2 text-gray-600 outline-none focus:border-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
+            className="relative appearance-none rounded border border-gray-300 bg-white px-4 py-2 text-gray-600 outline-none focus:border-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
             id="datetime"
             type="datetime-local"
           />
+          <MdDateRange className="absolute bottom-3 right-4 text-lg" />
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="font-medium uppercase text-gray-500">Type</h2>
