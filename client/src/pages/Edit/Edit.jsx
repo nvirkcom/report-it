@@ -1,22 +1,46 @@
-import "./Create.scss";
+import "./Edit.scss";
 import "easymde/dist/easymde.min.css";
 import "react-quill/dist/quill.snow.css";
 import { FaCaretDown } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import FormErrors from "../../components/FormErrors/FormErrors";
+import moment from "moment";
 import ReactQuill from "react-quill";
 import SimpleMDE from "react-simplemde-editor";
 
-function Create() {
+function Edit() {
   const [formErrors, setFormErrors] = useState([]);
+  const [report, setReport] = useState({});
   const [reportType, setReportType] = useState("Markdown");
   const [showDropdownReportType, setShowDropdownReportType] = useState(false);
   const navigate = useNavigate();
+  const params = useParams();
   const wysiwyg = useRef();
+
+  useEffect(() => {
+    const fetchReport = async () => {
+      try {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_URL}/reports/${params.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          },
+        );
+        setReport(data);
+        setReportType(data.type);
+      } catch (error) {
+        navigate("/dashboard");
+      }
+    };
+
+    fetchReport();
+  }, [params.id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,8 +65,8 @@ function Create() {
 
     if (errors.length === 0) {
       try {
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API_URL}/reports`,
+        const { data } = await axios.put(
+          `${import.meta.env.VITE_API_URL}/reports/${params.id}`,
           {
             content:
               markdown?.value || plainText?.value || wysiwyg.current?.value,
@@ -77,6 +101,7 @@ function Create() {
           </label>
           <input
             className="rounded border border-gray-300 bg-white px-4 py-2 text-gray-600 outline-none focus:border-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
+            defaultValue={report.title}
             id="title"
             type="text"
           />
@@ -90,6 +115,12 @@ function Create() {
           </label>
           <input
             className="relative appearance-none rounded border border-gray-300 bg-white px-4 py-2 text-gray-600 outline-none focus:border-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
+            defaultValue={
+              report.timestamp &&
+              new Date(Number.parseInt(report.timestamp))
+                .toISOString()
+                .slice(0, 16)
+            }
             id="timestamp"
             type="datetime-local"
           />
@@ -190,11 +221,13 @@ function Create() {
                   "unordered-list",
                 ],
               }}
+              value={report.content}
             />
           )}
           {reportType === "Plain Text" && (
             <textarea
               className="min-h-64 resize-none rounded border border-gray-300 bg-white px-4 py-2 text-gray-600 outline-none focus:border-blue-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
+              defaultValue={report.content}
               id="plain-text"
             ></textarea>
           )}
@@ -217,4 +250,4 @@ function Create() {
   );
 }
 
-export default Create;
+export default Edit;

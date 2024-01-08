@@ -2,12 +2,29 @@ import "./Dashboard.scss";
 import { AiFillFileMarkdown } from "react-icons/ai";
 import { MdOutlineWysiwyg } from "react-icons/md";
 import { PiTextTFill } from "react-icons/pi";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import CanvasJSReact from "@canvasjs/react-charts";
 import ReportsTable from "../../components/ReportsTable/ReportsTable";
 
 function Dashboard({ theme }) {
-  const CanvasJS = CanvasJSReact.CanvasJS;
+  const [reports, setReports] = useState([]);
   const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/reports`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        },
+      );
+      setReports(data);
+    };
+    fetchReports();
+  }, []);
 
   const optionsBar = {
     animationEnabled: true,
@@ -28,9 +45,21 @@ function Dashboard({ theme }) {
     data: [
       {
         dataPoints: [
-          { color: "#22c55e", label: "Markdown", y: 57 },
-          { color: "#eab308", label: "Plain Text", y: 5 },
-          { color: "#f87171", label: "WYSIWYG", y: 15 },
+          {
+            color: "#22c55e",
+            label: "Markdown",
+            y: reports.filter((report) => report.type === "Markdown").length,
+          },
+          {
+            color: "#eab308",
+            label: "Plain Text",
+            y: reports.filter((report) => report.type === "Plain Text").length,
+          },
+          {
+            color: "#f87171",
+            label: "WYSIWYG",
+            y: reports.filter((report) => report.type === "WYSIWYG").length,
+          },
         ],
         type: "column",
       },
@@ -46,10 +75,18 @@ function Dashboard({ theme }) {
           {
             color: "#22c55e",
             name: "Markdown",
-            y: 57,
+            y: reports.filter((report) => report.type === "Markdown").length,
           },
-          { color: "#eab308", name: "Plain Text", y: 5 },
-          { color: "#f87171", name: "WYSIWYG", y: 15 },
+          {
+            color: "#eab308",
+            name: "Plain Text",
+            y: reports.filter((report) => report.type === "Plain Text").length,
+          },
+          {
+            color: "#f87171",
+            name: "WYSIWYG",
+            y: reports.filter((report) => report.type === "WYSIWYG").length,
+          },
         ],
         showInLegend: true,
         type: "doughnut",
@@ -72,14 +109,19 @@ function Dashboard({ theme }) {
         <ul className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           <li className="flex items-center gap-4 text-xl font-medium">
             <AiFillFileMarkdown className="-rotate-12 text-5xl text-green-500" />{" "}
-            57 Markdown reports
+            {`${reports.filter((report) => report.type === "Markdown").length}`}{" "}
+            Markdown reports
           </li>
           <li className="flex items-center gap-4 text-xl font-medium">
-            <PiTextTFill className="-rotate-12 text-5xl text-yellow-500" /> 5
+            <PiTextTFill className="-rotate-12 text-5xl text-yellow-500" />{" "}
+            {`${
+              reports.filter((report) => report.type === "Plain Text").length
+            }`}{" "}
             Plain Text reports
           </li>
           <li className="flex items-center gap-4 text-xl font-medium">
-            <MdOutlineWysiwyg className="-rotate-12 text-5xl text-red-400" /> 15
+            <MdOutlineWysiwyg className="-rotate-12 text-5xl text-red-400" />{" "}
+            {`${reports.filter((report) => report.type === "WYSIWYG").length}`}{" "}
             WYSIWYG reports
           </li>
         </ul>
@@ -98,7 +140,7 @@ function Dashboard({ theme }) {
       </section>
       <section className="flex flex-col gap-6">
         <h2 className="text-3xl font-bold">Top Reports</h2>
-        <ReportsTable />
+        <ReportsTable reports={reports} setReports={setReports} />
       </section>
     </>
   );

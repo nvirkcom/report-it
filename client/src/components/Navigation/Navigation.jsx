@@ -7,13 +7,14 @@ import { FaUser } from "react-icons/fa";
 import { GiNotebook } from "react-icons/gi";
 import { IoIosCreate } from "react-icons/io";
 import { IoMdMenu } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useState } from "react";
 
-function Navigation({ handleTheme, theme }) {
+function Navigation({ handleTheme, setAuthenticated, theme }) {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [displayUserActions, setDisplayUserActions] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -26,7 +27,9 @@ function Navigation({ handleTheme, theme }) {
             >
               <IoMdMenu />
             </button>
-            <GiNotebook className="text-4xl text-blue-600 dark:text-blue-400" />
+            <Link to="/">
+              <GiNotebook className="text-4xl text-blue-600 dark:text-blue-400" />
+            </Link>
           </div>
           <ul className="hidden gap-12 text-sm text-gray-600 md:flex dark:text-gray-400">
             <li className="flex items-center gap-2">
@@ -68,9 +71,16 @@ function Navigation({ handleTheme, theme }) {
                       </Link>
                     </li>
                     <li>
-                      <Link className="flex items-center gap-2">
+                      <button
+                        className="flex items-center gap-2"
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          setAuthenticated(false);
+                          navigate("/");
+                        }}
+                      >
                         <CiLogout /> Logout
-                      </Link>
+                      </button>
                     </li>
                   </ul>
                 </div>

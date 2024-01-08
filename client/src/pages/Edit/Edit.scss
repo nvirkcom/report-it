@@ -1,0 +1,142 @@
+input[type="datetime-local"]::-webkit-inner-spin-button,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  background-color: transparent;
+  color: transparent;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.EasyMDEContainer {
+  .CodeMirror,
+  .editor-toolbar {
+    border: 0 !important;
+  }
+
+  .editor-toolbar {
+    background-color: white;
+
+    button {
+      color: rgb(75, 85, 99);
+
+      &.active {
+        opacity: 100% !important;
+      }
+    }
+  }
+
+  .CodeMirror {
+    background-color: white;
+    border-top: 1px solid rgb(209, 213, 219) !important;
+  }
+
+  .cm-null,
+  .cm-spell-error {
+    background-color: transparent !important;
+  }
+
+  .CodeMirror-scroll {
+    min-height: 16rem !important;
+  }
+}
+
+.quill {
+  .ql-toolbar,
+  .ql-container {
+    border: 0 !important;
+
+    .ql-picker-options {
+      border: 0 !important;
+    }
+
+    .ql-picker-label {
+      border: 0 !important;
+    }
+  }
+
+  .ql-toolbar {
+    border-bottom: 1px solid rgb(209, 213, 219) !important;
+    color: rgb(75 85 99) !important;
+
+    .ql-picker {
+      color: rgb(75 85 99);
+    }
+
+    .ql-fill {
+      fill: rgb(75 85 99);
+    }
+
+    .ql-stroke {
+      stroke: rgb(75 85 99);
+    }
+  }
+
+  .ql-editor {
+    min-height: 16rem;
+  }
+}
+
+.dark {
+  .CodeMirror {
+    background-color: rgb(31, 41, 55);
+    border-top: 1px solid rgb(55, 65, 81) !important;
+    color: rgb(209, 213, 219);
+  }
+
+  .editor-toolbar {
+    background-color: rgb(31, 41, 55);
+    button {
+      color: rgb(209, 213, 219);
+
+      &.active {
+        color: rgb(209, 213, 219);
+      }
+
+      &.active,
+      &:hover {
+        background-color: rgb(31, 41, 55);
+        border: 1px solid rgb(55, 65, 81);
+      }
+    }
+  }
+
+  .CodeMirror-cursor {
+    border-color: rgb(209, 213, 219);
+  }
+
+  .CodeMirror-selected {
+    background-color: rgb(17, 24, 39) !important;
+  }
+
+  .editor-preview-full,
+  .editor-preview,
+  .editor-preview-active {
+    background-color: rgb(31, 41, 55);
+    color: rgb(209, 213, 219);
+  }
+
+  .ql-toolbar {
+    border-bottom: 1px solid rgb(55, 65, 81) !important;
+    color: rgb(209, 213, 219) !important;
+
+    .ql-picker {
+      color: rgb(209, 213, 219);
+    }
+
+    .ql-picker-options {
+      background-color: rgb(55, 65, 81);
+    }
+
+    .ql-fill {
+      fill: rgb(209, 213, 219);
+    }
+
+    .ql-stroke {
+      stroke: rgb(209, 213, 219);
+    }
+  }
+}

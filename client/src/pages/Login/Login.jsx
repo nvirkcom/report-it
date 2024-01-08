@@ -1,66 +1,53 @@
 import "./Login.scss";
 import { FaKey, FaUser } from "react-icons/fa6";
 import { GiNotebook } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import FormErrors from "../../components/FormErrors/FormErrors";
 
-function Login({ handleTheme, theme }) {
+function Login({ handleTheme, setAuthenticated, theme }) {
+  const [formErrors, setFormErrors] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Login - Report It";
   }, []);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const { username, password } = e.target;
 
+    let errors = [];
+
     if (!username.value) {
-      username.classList.remove("border-gray-400");
-      username.classList.remove("dark:border-gray-600");
-      username.classList.remove("dark:focus:ring-blue-950");
-      username.classList.remove("focus:border-blue-600");
-      username.classList.remove("focus:ring-blue-200");
-      username.classList.add("border-red-600");
-      username.classList.add("dark:border-red-600");
-      username.classList.add("dark:focus:ring-red-900");
-      username.classList.add("focus:border-red-600");
-      username.classList.add("focus:ring-red-200");
-    } else {
-      username.classList.remove("border-red-600");
-      username.classList.remove("dark:border-red-600");
-      username.classList.remove("dark:focus:ring-red-900");
-      username.classList.remove("focus:border-red-600");
-      username.classList.remove("focus:ring-red-200");
-      username.classList.add("border-gray-400");
-      username.classList.add("dark:border-gray-600");
-      username.classList.add("dark:focus:ring-blue-950");
-      username.classList.add("focus:border-blue-600");
-      username.classList.add("focus:ring-blue-200");
+      errors.push({ id: 1, text: "Username is required" });
     }
 
     if (!password.value) {
-      password.classList.remove("border-gray-400");
-      password.classList.remove("dark:border-gray-600");
-      password.classList.remove("dark:focus:ring-blue-950");
-      password.classList.remove("focus:border-blue-600");
-      password.classList.remove("focus:ring-blue-200");
-      password.classList.add("border-red-600");
-      password.classList.add("dark:border-red-600");
-      password.classList.add("dark:focus:ring-red-900");
-      password.classList.add("focus:border-red-600");
-      password.classList.add("focus:ring-red-200");
-    } else {
-      password.classList.remove("border-red-600");
-      password.classList.remove("dark:border-red-600");
-      password.classList.remove("dark:focus:ring-red-900");
-      password.classList.remove("focus:border-red-600");
-      password.classList.remove("focus:ring-red-200");
-      password.classList.add("border-gray-400");
-      password.classList.add("dark:border-gray-600");
-      password.classList.add("dark:focus:ring-blue-950");
-      password.classList.add("focus:border-blue-600");
-      password.classList.add("focus:ring-blue-200");
+      errors.push({ id: 2, text: "Password is required" });
+    }
+
+    setFormErrors(errors);
+
+    if (errors.length === 0) {
+      try {
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API_URL}/auth/login`,
+          { password: password.value, username: username.value },
+        );
+        localStorage.setItem("token", data.token);
+        setAuthenticated(true);
+        navigate("/dashboard");
+      } catch (error) {
+        if (error.response.status === 401) {
+          setFormErrors([{ id: 1, text: error.response.data.message }]);
+        } else if (error.response.status === 404) {
+          setFormErrors([{ id: 1, text: error.response.data.message }]);
+        }
+      }
     }
   };
 
@@ -109,6 +96,7 @@ function Login({ handleTheme, theme }) {
               type="password"
             />
           </div>
+          {formErrors.length > 0 && <FormErrors formErrors={formErrors} />}
           <div className="mt-8 flex flex-col items-center gap-3">
             <input
               className="w-full cursor-pointer rounded bg-blue-600 p-2 text-sm font-bold text-white hover:bg-blue-700 active:bg-blue-800"
@@ -117,7 +105,7 @@ function Login({ handleTheme, theme }) {
             />
             <Link
               className="p-1 text-sm font-bold text-blue-500 hover:text-blue-600 active:text-blue-700"
-              to="/register"
+              to="/auth/register"
             >
               Register
             </Link>

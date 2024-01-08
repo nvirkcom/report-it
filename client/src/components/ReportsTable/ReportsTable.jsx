@@ -1,11 +1,12 @@
 import "./ReportsTable.scss";
-import { useState } from "react";
 import { FaEllipsisVertical } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import DeleteModal from "../DeleteModal/DeleteModal";
 
-function ReportTable() {
+function ReportTable({ reports, setReports }) {
   return (
-    <table className="w-full">
+    <table className="overflow-x-hidden">
       <thead className="text-left text-xs font-bold uppercase">
         <tr className="border-y dark:border-gray-700">
           <th className="w-1/5 py-2 pl-2">ID</th>
@@ -16,35 +17,18 @@ function ReportTable() {
         </tr>
       </thead>
       <tbody>
-        {[
-          {
-            created_at: new Date(),
-            id: 1,
-            title: "Title 1",
-            type: "Markdown",
-          },
-          {
-            created_at: new Date(),
-            id: 2,
-            title: "Title 2",
-            type: "Plain Text",
-          },
-          {
-            created_at: new Date(),
-            id: 3,
-            title: "Title 3",
-            type: "WYSIWYG",
-          },
-        ].map((report) => (
-          <TableRow key={report.id} report={report} />
+        {reports.map((report) => (
+          <TableRow key={report.id} report={report} setReports={setReports} />
         ))}
       </tbody>
     </table>
   );
 }
 
-function TableRow({ report }) {
+function TableRow({ report, setReports }) {
   const [showActions, setShowActions] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
       <td className="py-4 pl-2">{report.id}.</td>
@@ -57,17 +41,23 @@ function TableRow({ report }) {
         </Link>
       </td>
       <td className="py-4">
-        {report.created_at.toLocaleDateString("en-CA", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
+        {new Date(Number.parseInt(report.timestamp)).toLocaleDateString(
+          "en-CA",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          },
+        )}
       </td>
       <td className="py-4">
-        {report.created_at.toLocaleTimeString("en-CA", {
-          hour: "numeric",
-          minute: "numeric",
-        })}
+        {new Date(Number.parseInt(report.timestamp)).toLocaleTimeString(
+          "en-CA",
+          {
+            hour: "numeric",
+            minute: "numeric",
+          },
+        )}
       </td>
       <td className="flex items-center justify-between py-4 pr-1">
         <span
@@ -96,11 +86,25 @@ function TableRow({ report }) {
                 </Link>
               </li>
               <li>
-                <button className="rounded-b bg-red-600 px-4 py-1 text-gray-100">
+                <button
+                  className="rounded-b bg-red-600 px-4 py-1 text-gray-100"
+                  onClick={() => {
+                    setShowActions(false);
+                    setShowDeleteModal(true);
+                    document.body.style.overflow = "hidden";
+                  }}
+                >
                   Delete
                 </button>
               </li>
             </ul>
+          )}
+          {showDeleteModal && (
+            <DeleteModal
+              id={report.id}
+              setReports={setReports}
+              setShowDeleteModal={setShowDeleteModal}
+            />
           )}
         </div>
       </td>
