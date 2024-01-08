@@ -9,6 +9,8 @@ function Report() {
   const params = useParams();
 
   useEffect(() => {
+    document.title = "Report - Report It";
+
     const fetchReport = async () => {
       try {
         const { data } = await axios.get(

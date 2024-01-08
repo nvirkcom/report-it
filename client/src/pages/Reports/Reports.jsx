@@ -7,6 +7,8 @@ function Reports() {
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
+    document.title = "Reports - Report It";
+
     const fetchReports = async () => {
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/reports`,

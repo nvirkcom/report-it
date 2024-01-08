@@ -15,7 +15,6 @@ router.use((req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.SECRET_KEY);
     req.user_id = payload.id;
-    console.log(payload);
     next();
   } catch (error) {
     res.status(401).json({

@@ -6,7 +6,7 @@ import DeleteModal from "../DeleteModal/DeleteModal";
 
 function ReportTable({ reports, setReports }) {
   return (
-    <table className="overflow-x-hidden">
+    <table className="w-full">
       <thead className="text-left text-xs font-bold uppercase">
         <tr className="border-y dark:border-gray-700">
           <th className="w-1/5 py-2 pl-2">ID</th>

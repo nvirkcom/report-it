@@ -13,6 +13,8 @@ function Dashboard({ theme }) {
 
   useEffect(() => {
     const fetchReports = async () => {
+      document.title = "Dashboard - Report It";
+
       const { data } = await axios.get(
         `${import.meta.env.VITE_API_URL}/reports`,
         {

@@ -22,6 +22,8 @@ function Edit() {
   const wysiwyg = useRef();
 
   useEffect(() => {
+    document.title = "Edit - Report It";
+
     const fetchReport = async () => {
       try {
         const { data } = await axios.get(

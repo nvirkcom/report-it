@@ -5,7 +5,7 @@ import { FaCaretDown } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import FormErrors from "../../components/FormErrors/FormErrors";
 import ReactQuill from "react-quill";
@@ -17,6 +17,10 @@ function Create() {
   const [showDropdownReportType, setShowDropdownReportType] = useState(false);
   const navigate = useNavigate();
   const wysiwyg = useRef();
+
+  useEffect(() => {
+    document.title = "Create - Report It";
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -39,7 +39,7 @@ function App() {
 
           setAuthenticated(true);
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       };
       authenticate();

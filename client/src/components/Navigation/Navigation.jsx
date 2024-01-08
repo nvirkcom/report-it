@@ -66,11 +66,6 @@ function Navigation({ handleTheme, setAuthenticated, theme }) {
                 <div className="absolute right-0 top-12">
                   <ul className="flex w-36 flex-col gap-4 rounded border bg-white p-4 text-sm text-gray-600 dark:border-gray-500 dark:bg-gray-800 dark:text-gray-400">
                     <li>
-                      <Link className="flex items-center gap-2">
-                        <AiFillEdit /> Edit Profile
-                      </Link>
-                    </li>
-                    <li>
                       <button
                         className="flex items-center gap-2"
                         onClick={() => {
