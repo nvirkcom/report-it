@@ -1,4 +1,5 @@
 import "./Register.scss";
+import { BiHide, BiSolidShow } from "react-icons/bi";
 import { GiNotebook } from "react-icons/gi";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
@@ -8,6 +9,7 @@ import FormErrors from "../../components/FormErrors/FormErrors";
 
 function Register({ handleTheme, setAuthenticated, theme }) {
   const [formErrors, setFormErrors] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,8 +92,19 @@ function Register({ handleTheme, setAuthenticated, theme }) {
               className="rounded border border-gray-400 pb-3 pl-4 pt-2 text-xs outline-none focus:border-blue-600 focus:ring focus:ring-blue-200 dark:border-gray-600 dark:bg-gray-800 dark:focus:ring-blue-950"
               id="password"
               placeholder="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
             />
+            <button
+              className="absolute right-3 top-[29px] text-lg"
+              onClick={(e) => e.preventDefault()}
+            >
+              {showPassword && (
+                <BiHide onClick={() => setShowPassword(false)} />
+              )}
+              {!showPassword && (
+                <BiSolidShow onClick={() => setShowPassword(true)} />
+              )}
+            </button>
           </div>
           {formErrors.length > 0 && <FormErrors formErrors={formErrors} />}
           <div className="mt-8 flex flex-col items-center gap-3">
